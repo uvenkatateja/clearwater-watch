@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/context/auth-context';
+import { useToast } from '@/components/ui/use-toast';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -14,6 +15,7 @@ const LoginForm = () => {
   const [error, setError] = useState('');
   const { login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,20 +52,25 @@ const LoginForm = () => {
     }
   };
 
-  // Demo login
-  const handleDemoLogin = async () => {
-    try {
-      setIsLoading(true);
-      setError('');
-      // Use demo credentials
-      await login('demo@clearwaterwatch.com', 'demopassword');
-      navigate('/dashboard');
-    } catch (err) {
-      setError('Demo login failed');
-      console.error(err);
-    } finally {
+  // Demo login - accepts any credentials
+  const handleDemoLogin = () => {
+    setIsLoading(true);
+    
+    // Set demo login in session storage
+    sessionStorage.setItem('demoLogin', 'true');
+    
+    // Short timeout to simulate authentication
+    setTimeout(() => {
+      // Simulate successful login with toast notification
+      toast({
+        title: "Demo Login Successful",
+        description: "Welcome to the ClearWater Watch dashboard!",
+      });
+      
+      // Navigate to dashboard with state indicating demo login
+      navigate('/dashboard', { state: { fromDemoLogin: true } });
       setIsLoading(false);
-    }
+    }, 1000);
   };
 
   return (
@@ -120,8 +127,8 @@ const LoginForm = () => {
           <Button variant="outline" type="button" onClick={handleGoogleLogin} disabled={isLoading}>
             Google
           </Button>
-          <Button variant="outline" type="button" onClick={handleDemoLogin} disabled={isLoading}>
-            Demo Account
+          <Button variant="secondary" type="button" onClick={handleDemoLogin} disabled={isLoading} className="bg-water-500 hover:bg-water-600 text-white">
+            Demo Login (No Credentials Required)
           </Button>
         </div>
       </CardContent>
