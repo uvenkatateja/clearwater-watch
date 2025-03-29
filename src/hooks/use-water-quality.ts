@@ -16,12 +16,14 @@ export const useWaterQuality = () => {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    console.log("Initializing Firebase connection to WaterQuality node");
     const waterQualityRef = ref(db, 'WaterQuality');
     
     const unsubscribe = onValue(
       waterQualityRef, 
       (snapshot) => {
         const waterData = snapshot.val();
+        console.log("Firebase data received:", waterData);
         setData(waterData);
         setLoading(false);
       },
@@ -32,7 +34,10 @@ export const useWaterQuality = () => {
       }
     );
 
-    return () => unsubscribe();
+    return () => {
+      console.log("Unsubscribing from Firebase");
+      unsubscribe();
+    };
   }, []);
 
   return { data, loading, error };

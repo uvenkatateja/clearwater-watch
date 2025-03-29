@@ -8,6 +8,10 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const WaterQualityWidget = () => {
   const { data, loading, error } = useWaterQuality();
+  
+  console.log("Water Quality Data:", data);
+  console.log("Loading state:", loading);
+  console.log("Error state:", error);
 
   // Helper function to determine pH status
   const getPHStatus = (ph: number) => {
@@ -49,6 +53,7 @@ const WaterQualityWidget = () => {
   }
 
   if (error) {
+    console.error("Water Quality Error:", error);
     return (
       <Card>
         <CardHeader>
@@ -62,6 +67,7 @@ const WaterQualityWidget = () => {
   }
 
   if (!data) {
+    console.warn("No water quality data available");
     return (
       <Card>
         <CardHeader>

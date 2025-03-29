@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WaterQualityWidget from '@/components/WaterQualityWidget';
@@ -7,9 +7,31 @@ import WaterQualityChart from '@/components/WaterQualityChart';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useWaterQuality } from '@/hooks/use-water-quality';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useToast } from '@/components/ui/use-toast';
 
 const Dashboard = () => {
   const { data, loading, error } = useWaterQuality();
+  const { toast } = useToast();
+  
+  // Check if the user is in demo mode
+  useEffect(() => {
+    const isDemoUser = sessionStorage.getItem('demoLogin') === 'true';
+    if (isDemoUser) {
+      console.log("User is in demo mode, displaying water quality data");
+    }
+  }, []);
+  
+  // Notify user if there's a data loading error
+  useEffect(() => {
+    if (error) {
+      console.error("Dashboard data loading error:", error);
+      toast({
+        title: "Data loading error",
+        description: "There was a problem loading the water quality data. Please try again later.",
+        variant: "destructive",
+      });
+    }
+  }, [error, toast]);
 
   return (
     <div className="flex flex-col min-h-screen">
