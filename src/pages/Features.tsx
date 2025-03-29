@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -6,7 +5,7 @@ import {
   Droplet, 
   Gauge, 
   Thermometer, 
-  Water, 
+  Droplets, 
   Bell, 
   LineChart, 
   BarChart, 
@@ -82,7 +81,7 @@ const Features = () => {
               
               <div className="flex items-start space-x-4">
                 <div className="bg-water-100 p-3 rounded-full">
-                  <Water className="h-6 w-6 text-water-600" />
+                  <Droplets className="h-6 w-6 text-water-600" />
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold mb-2">Overall Quality Assessment</h3>

@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Droplet, Gauge, Thermometer, Water } from 'lucide-react';
+import { Droplet, Gauge, Thermometer, Droplets } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useAuth } from '@/context/auth-context';
@@ -88,7 +87,7 @@ const Index = () => {
             <div className="bg-water-50 p-6 rounded-lg text-center hover:shadow-lg transition-shadow">
               <div className="flex justify-center mb-4">
                 <div className="bg-water-100 p-3 rounded-full">
-                  <Water className="h-8 w-8 text-water-600" />
+                  <Droplets className="h-8 w-8 text-water-600" />
                 </div>
               </div>
               <h3 className="text-xl font-semibold mb-2">Quality Assessment</h3>
